@@ -108,3 +108,13 @@ qSort [] = []
 qSort (x:xs) = let smallerSorted = qSort [a | a <- xs, a <= x]
                    largerSorted = qSort [a | a <- xs, a > x]
                 in smallerSorted ++ [x] ++ largerSorted
+
+joinWords :: [a] -> [a] -> [a] -> [a]
+joinWords a b c = a ++ b ++ c
+
+joinOneMoreWord :: [Char] -> [Char]
+joinOneMoreWord = joinWords "hello" "world"
+
+largestDivisible :: (Integral a) => a
+largestDivisible  = head (filter p [100000,99999..])
+    where p x = x `mod` 3829 == 0
