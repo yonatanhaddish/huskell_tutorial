@@ -71,3 +71,20 @@ tell []= "The list is empty"
 tell (x:[])= "The list has one element: " ++ show x
 tell (x:y:[])= "The list has two elements: " ++ show x ++ " and " ++ show y
 tell (x:y:_)= "This list is long. The first two elements are: " ++ show x ++ " and " ++ show y
+
+sum' :: (Num a) => [a] -> a
+sum' []= 0
+sum' (x:xs)= x + sum' xs
+
+bmiTell :: (RealFloat a) => a -> a -> String
+bmiTell weight height | bmi <= 18.5 = "Under Weight"
+                      | bmi <= 25 = "Normal"
+                      | bmi <= 30 = "Over Weight"
+                      | otherwise = "Obisity"
+                      where bmi = weight/height^2
+
+cylinderArea :: (RealFloat a) => a -> a -> a
+cylinderArea r h = 
+    let sideArea = 2 * pi * r * h
+        topArea = pi * r^2
+    in sideArea + 2 * topArea
