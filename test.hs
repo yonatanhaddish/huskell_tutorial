@@ -98,3 +98,13 @@ take' :: (Num i, Ord i) => i -> [a] -> [a]
 take' n _ | n <= 0 = []
 take' _ [] = []
 take' n (x:xs) = x: take' (n-1) xs
+
+reverse' :: [a] -> [a]
+reverse' [] = []
+reverse' (x:xs) = reverse' xs ++ [x]
+
+qSort :: (Ord a) => [a] -> [a]
+qSort [] = []
+qSort (x:xs) = let smallerSorted = qSort [a | a <- xs, a <= x]
+                   largerSorted = qSort [a | a <- xs, a > x]
+                in smallerSorted ++ [x] ++ largerSorted
