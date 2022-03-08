@@ -133,3 +133,7 @@ numLongChains = length (filter isLong (map chain [1..100]))
 
 trialB :: Int
 trialB = sum (filter (>10) (map (*2) [2..10]))
+
+trialC :: Int
+trialC = sum $ filter(>10) $ map(*2)[2..10]
+
