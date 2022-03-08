@@ -130,3 +130,6 @@ chain n
 numLongChains :: Int
 numLongChains = length (filter isLong (map chain [1..100]))
     where isLong xs = length xs > 15
+
+trialB :: Int
+trialB = sum (filter (>10) (map (*2) [2..10]))
