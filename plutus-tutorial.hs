@@ -10,3 +10,7 @@ valHash = Scripts.validatorHash validator
 
 scrAddress :: Ledger.Address
 scrAddress = scriptAddress validator
+
+type GiftSchema =
+            Endpoint "give" Integer
+        .\/ Endpoint "grab" ()
