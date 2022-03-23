@@ -137,3 +137,16 @@ trialB = sum (filter (>10) (map (*2) [2..10]))
 trialC :: Int
 trialC = sum $ filter(>10) $ map(*2)[2..10]
 
+data Task1 = BasicTask1 String Int
+
+assignment1 :: Task1
+assignment1 = BasicTask1 "Do assignment 1" 60
+
+laundry1 :: Task1
+laundry1 = BasicTask1 "Do Laundry" 45
+
+minLovelace :: Integer
+minLovelace = 2000000
+
+myFirstFunction :: String -> String
+myFirstFunction input = "Hello " ++ input ++ "!"
