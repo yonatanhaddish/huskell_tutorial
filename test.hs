@@ -151,4 +151,3 @@ minLovelace = 2000000
 myFirstFunction :: String -> String
 myFirstFunction input = "Hello " ++ input ++ "!"
 
-traceIfFalse "too early" correctCloseSlotRange &&
