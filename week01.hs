@@ -97,6 +97,12 @@ minBid AuctionDatum{..} = case adHighestBid of
     Nothing      -> aMinBid adAuction
     Just Bid{..} -> bBid + 1
 
+    {-# INLINABLE minBid #-}
+minBid :: AuctionDatum -> Integer
+minBid AuctionDatum{..} = case adHighestBid of
+    Nothing      -> aMinBid adAuction
+    Just Bid{..} -> bBid + 1
+
 {-# INLINABLE mkAuctionValidator #-}
 mkAuctionValidator :: AuctionDatum -> AuctionAction -> ScriptContext -> Bool
 mkAuctionValidator ad redeemer ctx =
