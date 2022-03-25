@@ -154,6 +154,3 @@ myFirstFunction input = "Hello " ++ input ++ "!"
 auction :: Auction
 auction = adAuction ad
 
-correctBidOutputDatum :: Bid -> Bool
-correctBidOutputDatum b = (adAuction outputDatum == auction)   &&
-                              (adHighestBid outputDatum == Just b)
