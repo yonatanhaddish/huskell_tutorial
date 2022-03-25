@@ -151,6 +151,6 @@ minLovelace = 2000000
 myFirstFunction :: String -> String
 myFirstFunction input = "Hello " ++ input ++ "!"
 
-auction :: Auction
-auction = adAuction ad
+auctionValidator :: Validator
+auctionValidator = Scripts.validatorScript typedAuctionValidator
 
