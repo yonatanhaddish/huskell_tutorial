@@ -104,5 +104,23 @@ $(mkKnownCurrencies [])
 
 _________________________________________________________________
 
-
+start :: AsContractError e => StartParams -> Contract w s e ()
+start StartParams{..} = do
+    pkh <- ownPaymentPubKeyHash
+    let a = Auction
+                { aSeller   = pkh
+                , aDeadline = spDeadline
+                , aMinBid   = spMinBid
+                , aCurrency = spCurrency
+                , aToken    = spToken
+                }
+        d = AuctionDatum
+                { adAuction    = a
+                , adHighestBid = Nothing
+                }
+        v = Value.singleton spCurrency spToken 1 <> Ada.lovelaceValueOf minLovelace
+        tx = Constraints.mustPayToTheScript d v
+    ledgerTx <- submitTxConstraints typedAuctionValidator tx
+    void $ awaitTxConfirmed $ getCardanoTxId ledgerTx
+    logInfo @P.String $ printf "started auction %s for token %s" (P.show a) (P.show v)
 
