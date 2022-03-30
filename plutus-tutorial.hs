@@ -124,3 +124,7 @@ start StartParams{..} = do
     void $ awaitTxConfirmed $ getCardanoTxId ledgerTx
     logInfo @P.String $ printf "started auction %s for token %s" (P.show a) (P.show v)
 
+_______________________________________________________________________
+
+bid :: forall w s. BidParams -> Contract w s Text ()
+
