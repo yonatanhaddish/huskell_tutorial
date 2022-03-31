@@ -126,5 +126,10 @@ start StartParams{..} = do
 
 _______________________________________________________________________
 
-bid :: forall w s. BidParams -> Contract w s Text ()
+endpoints :: Contract () AuctionSchema Text ()
+endpoints = awaitPromise (start' `select` bid' `select` close') >> endpoints
+  where
+    start' = endpoint @"start" start
+    bid'   = endpoint @"bid"   bid
+    close' = endpoint @"close" close
 
