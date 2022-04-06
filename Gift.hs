@@ -22,4 +22,10 @@ mkValidator _ _ _ = ()
 validator :: Validator
 validator = mkValidatorScript $$(PlutusTx.compile [|| mkValidator ||])
 
+valHash :: Ledger.ValidatorHash
+valHash = Scripts.ValidatorHash validator
+
+scrAddress :: Ledger.Address
+scrAddress = scrAddress validator
+
 
