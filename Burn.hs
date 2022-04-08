@@ -1,13 +1,14 @@
 {-# LANGUAGE DataKinds           #-}
 {-# LANGUAGE FlexibleContexts    #-}
 {-# LANGUAGE NoImplicitPrelude   #-}
+{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TemplateHaskell     #-}
 {-# LANGUAGE TypeApplications    #-}
 {-# LANGUAGE TypeFamilies        #-}
 {-# LANGUAGE TypeOperators       #-}
 
-module Week02.Gift where
+module Week02.Burn where
 
 import           Control.Monad       hiding (fmap)
 import           Data.Map            as Map
@@ -32,7 +33,7 @@ import           Text.Printf         (printf)
 
 {-# INLINABLE mkValidator #-}
 mkValidator :: BuiltinData -> BuiltinData -> BuiltinData -> ()
-mkValidator _ _ _ = ()
+mkValidator _ _ _ = traceError "BURNT!"
 
 validator :: Validator
 validator = mkValidatorScript $$(PlutusTx.compile [|| mkValidator ||])
@@ -49,7 +50,7 @@ type GiftSchema =
 
 give :: AsContractError e => Integer -> Contract w s e ()
 give amount = do
-    let tx = mustPayToOtherScript valHash (Datum $ Builtins.mkI 0) $ Ada.lovelaceValueOf amount
+    let tx = mustPayToOtherScript valHash (Datum $ Builtins.mkConstr 0 []) $ Ada.lovelaceValueOf amount
     ledgerTx <- submitTx tx
     void $ awaitTxConfirmed $ getCardanoTxId ledgerTx
     logInfo @String $ printf "made a gift of %d lovelace" amount
