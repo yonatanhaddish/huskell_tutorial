@@ -133,3 +133,4 @@ endpoints = awaitPromise (give' `select` grab') >> endpoints
 mkSchemaDefinitions ''VestingSchema
 
 mkKnownCurrencies []
+mkKnownCurrencies []
