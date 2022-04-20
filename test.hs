@@ -158,3 +158,6 @@ nameDo = do putStr "What is your first name? "
             last <- getLine
             let full = first ++ " " ++ last
             putStrLn ("Pleased to meet you, " ++ full ++ "!")
+
+main :: IO ()
+main = putStrLn "Hello World!"

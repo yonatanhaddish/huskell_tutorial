@@ -209,10 +209,11 @@ instance Scripts.ValidatorTypes Vesting where
 
 typedValidator :: PaymentPubKeyHash -> Scripts.TypedValidator Vesting
 typedValidator p = Scripts.mkTypedValidator @Vesting
-($$(PlutusTx.compile [|| mkValidator ||]) `PlutusTx.applyCode` PlutusTx.liftCode p)
-$$(PlutusTx.compile [|| wrap ||])\
-where
+    ($$(PlutusTx.compile [|| mkValidator ||]) `PlutusTx.applyCode` PlutusTx.liftCode p)
+    $$(PlutusTx.compile [|| wrap ||])
+  where
     wrap = Scripts.wrapValidator @POSIXTime @()
+
 
 validator :: PaymentPubKeyHash -> Validator
 validator = Scripts.validatorScript . typedValidator
