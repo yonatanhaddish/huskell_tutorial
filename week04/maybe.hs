@@ -23,7 +23,7 @@ foo'' x y z = case readMaybe x of
             Nothing -> Nothing
             Just m -> Just (m + k + l)
 
-safeDiv :: Integral a => a -> a -> Maybe a
-safeDiv _ 0 = Nothing
-safeDiv x y = Just $ x `div` y
+-- safeDiv :: Integral a => a -> a -> Maybe a
+-- safeDiv _ 0 = Nothing
+-- safeDiv x y = Just $ x `div` y
 
