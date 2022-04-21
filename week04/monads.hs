@@ -8,3 +8,8 @@ nameDo = do putStr "What is your first name? "
             last <- getLine
             let full = first ++ " " ++ last
             putStrLn ("Pleased to meet you, " ++ full ++ "!")
+
+bar :: IO ()
+bar = getLine >>= \s -> 
+      getLine >>= \t -> 
+      putStrLn ("Output: " ++ s ++ " " ++ t)
