@@ -13,3 +13,9 @@ doubleX x = x + x
 
 quadrapleY :: Int -> Int
 quadrapleY y = doubleX (doubleX y)
+
+factoriaL :: Int -> Int
+factoriaL x = product [1..x]
+
+-- averagE :: a -> Int
+averagE u = sum u `div` length u
