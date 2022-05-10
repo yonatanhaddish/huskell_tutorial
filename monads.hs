@@ -1,0 +1,3 @@
+-- Curried functions (a -> b -> c)
+-- Polymorphic functions (Num a => a)
+-- Associativity (Datum -> Reedemer -> ScriptContect -> Bool)
