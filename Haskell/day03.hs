@@ -31,6 +31,11 @@ printNum' n | n == 1 = "One"
             | n == 5 = "Five"
             | otherwise = "Number not found on database"
 ------------------------------------------------------------------------------------
+-- Normal expression
+addA :: Int -> Int -> Int
+addA x y = x + y
 
 -- Lambda Expressions
-
+addL :: Int -> Int -> Int
+addL = \x -> \y -> x + y
+------------------------------------------------------------------------------------
