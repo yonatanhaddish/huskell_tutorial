@@ -15,5 +15,17 @@ buildSendAdaTransaction = async () => {
   const shellyOutputAddress= Address.from_bech32(this.state.addressBech32SendADA);
   const shellyChangeAddress= Address.from_bech32(this.state.addressChange);
 
-  
+  txBuilder.add_output(
+      transactionOutput.new(
+          shellyOutputAddress,
+          Value.new(BigNum.from_str(this.state.lovelaceToSend.toString()))
+      )
+  )
+
+  const txUnspentOutputs= await this.getTxUnspentOutputs();
+  txBuilder.add_inputs_from(txUnspentOutputs, 1)
+
+  txBuilder.add_change_if_needed(shellyChangeAddress);
+
+  const txBody= txBuilder.build();
 };
