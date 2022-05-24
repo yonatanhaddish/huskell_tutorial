@@ -31,22 +31,24 @@ buildSendAdaTransaction = async () => {
 
   const txBody = txBuilder.build();
 
-  const transactionWitnessSet= TransactionWitnessSet.new();
+  const transactionWitnessSet = TransactionWitnessSet.new();
 
-  const tx= Transaction.new(
-      txBody, TransactionWitnessSet.from_bytes(transactionWitnessSet.to_bytes())
-  )
+  const tx = Transaction.new(
+    txBody,
+    TransactionWitnessSet.from_bytes(transactionWitnessSet.to_bytes())
+  );
 
-  let txVkeyWitness= await this.API.signTx(Buffer.from(tx.to_bytes, "utf8").toString("hex"), true);
+  let txVkeyWitness = await this.API.signTx(
+    Buffer.from(tx.to_bytes, "utf8").toString("hex"),
+    true
+  );
 
   transactionWitnessSet.set_vkeys(txVkeyWitness.vkeys());
 
-  const signedTx= Transaction.new(
-      tx.Body(),
-      transactionWitnessSet
-  );
+  const signedTx = Transaction.new(tx.Body(), transactionWitnessSet);
 
-  
-  
-  
+  const submittedTxHash = await this.API.submitTx(
+    Buffer.from(signedTx.to_bytes(), "utf8").toString("hex")
+  );
+  this.setState({ submittedTxHash });
 };
