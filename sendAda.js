@@ -12,20 +12,41 @@
 
 buildSendAdaTransaction = async () => {
   const txBuilder = await this.initTransactionBuilder();
-  const shellyOutputAddress= Address.from_bech32(this.state.addressBech32SendADA);
-  const shellyChangeAddress= Address.from_bech32(this.state.addressChange);
+  const shellyOutputAddress = Address.from_bech32(
+    this.state.addressBech32SendADA
+  );
+  const shellyChangeAddress = Address.from_bech32(this.state.addressChange);
 
   txBuilder.add_output(
-      transactionOutput.new(
-          shellyOutputAddress,
-          Value.new(BigNum.from_str(this.state.lovelaceToSend.toString()))
-      )
-  )
+    transactionOutput.new(
+      shellyOutputAddress,
+      Value.new(BigNum.from_str(this.state.lovelaceToSend.toString()))
+    )
+  );
 
-  const txUnspentOutputs= await this.getTxUnspentOutputs();
-  txBuilder.add_inputs_from(txUnspentOutputs, 1)
+  const txUnspentOutputs = await this.getTxUnspentOutputs();
+  txBuilder.add_inputs_from(txUnspentOutputs, 1);
 
   txBuilder.add_change_if_needed(shellyChangeAddress);
 
-  const txBody= txBuilder.build();
+  const txBody = txBuilder.build();
+
+  const transactionWitnessSet= TransactionWitnessSet.new();
+
+  const tx= Transaction.new(
+      txBody, TransactionWitnessSet.from_bytes(transactionWitnessSet.to_bytes())
+  )
+
+  let txVkeyWitness= await this.API.signTx(Buffer.from(tx.to_bytes, "utf8").toString("hex"), true);
+
+  transactionWitnessSet.set_vkeys(txVkeyWitness.vkeys());
+
+  const signedTx= Transaction.new(
+      tx.Body(),
+      transactionWitnessSet
+  );
+
+  
+  
+  
 };
