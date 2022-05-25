@@ -15,5 +15,15 @@ buildSendTokenTransaction = async () => {
     const shellyOutputAddress= Address.from_bech32(this.state.addressBech32SendAda);
     const shellyChangeAddress= Address.from_bech32(this.state.changeAddress);
 
-    
+    let txOutputBuilder= TransactionOutputBuilder.new();
+    txOutputBuilder= txOutputBuilder.with_address(shellyOutputAddress);
+    txOutputBuilder= txOutputBuilder.next();
+
+    let multiAsset= MultiAsset.new();
+    let assets= Assets.new();
+    assets.insert(
+        AssetName.new(Buffer.from(this.state.assetNameHex, "hex")),
+        BigNum.from_str(this.state.assetAmountToSend.toString())
+    );
+
 }
