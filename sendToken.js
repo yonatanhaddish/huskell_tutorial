@@ -33,4 +33,35 @@ buildSendTokenTransaction = async () => {
     txOutputBuilder= txOutputBuilder.with_address_and_min_required_coin(multiAsset, BigNum.from_str(
         this.protocolParams.coinsPerUtxoWord))
     
+    const txOutput= txOutputBuilder.build();
+
+    txBuilder.add_output(txOutput);
+
+    const txUnspentOutputs= await this.getTxUnspentOutputs();
+    txBuilder.add_inputs_from(txUnspentOutputs, 3);
+
+    txBuilder.add_change_if_needed(shellyChangeAddress)
+
+    const txBody= txBuilder.build();
+
+    const transactionWitnessSet= TransactionWitnessSet.new();
+
+    const tx= Transaction.new(
+        txBody,
+        TransactionWitnessSet.from_bytes(transactionWitnessSet.to_bytes())
+    )
+
+    let txVkeyWitness= await this.API.signTx(Buffer.from(tx.to_bytes(), "utf8").toString("hex"), true);
+    txVkeyWitness= TransactionWitnessSet.from_bytes(Buffer.from(txVkeyWitness, "hex"));
+
+    transactionWitnessSet.set_Vkeys(txVkeyWitness.vkeys());
+
+    const signedTx = Transaction.new(
+        tx.body(),
+        transactionWitnessSet
+    );
+
+    const submittedTxHash= await this.API.submitTx(Buffer.from(signedTx.to_bytes(), "utf8").toString("hex"));
+    this.setState({submittedTxHash})
+    
 }
