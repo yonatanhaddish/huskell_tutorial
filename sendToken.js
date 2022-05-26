@@ -22,8 +22,15 @@ buildSendTokenTransaction = async () => {
     let multiAsset= MultiAsset.new();
     let assets= Assets.new();
     assets.insert(
-        AssetName.new(Buffer.from(this.state.assetNameHex, "hex")),
-        BigNum.from_str(this.state.assetAmountToSend.toString())
+        AssetName.new(Buffer.from(this.state.assetNameHex, "hex")), // Asset Name
+        BigNum.from_str(this.state.assetAmountToSend.toString()) // How much ADA to send
+    );
+    multiAsset.insert(
+        ScriptHash.from_bytes(Buffer.from(this.state.assetPolicyIdHex, "hex")), // PolicyID
+        assets
     );
 
+    txOutputBuilder= txOutputBuilder.with_address_and_min_required_coin(multiAsset, BigNum.from_str(
+        this.protocolParams.coinsPerUtxoWord))
+    
 }
