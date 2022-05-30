@@ -42,4 +42,14 @@
     let txVkeyWitness = await this.API.signTx(Buffer.from(tx.to_bytes(), "utf8").toString("hex"), true);
     txVkeyWitness= TransactionWitnessSet.from_bytes(Buffer.from(txVkeyWitness, "hex"));
 
- }
+    transactionWitnessSet.set_vkeys(txVkeyWitness.vkeys());
+
+    const signedTx= Transaction.new(
+        tx.body(),
+        transactionWitnessSet
+    )
+
+    const submittedTxHash= await this.API.submitTx(Buffer.from(signedTx.to_bytes(), "utf8").toString("hex"));
+    // console.log(submittedTxHash)
+    this.setState({submittedTxHash: submittedTxHash, transactionIdLocked: submittedTxHash, lovelaceLocked: this.state.lovelaceToSend});
+ };
