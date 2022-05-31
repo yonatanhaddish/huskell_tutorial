@@ -14,4 +14,15 @@
      const txBuilder = await this.initTransactionBuilder();
      const ScriptAddress = Address.from_bech32(this.state.addressScriptBech32);
      const shellyChangeAddress = Address.from_bech32(this.state.shellyChangeAddress);
+
+     let txOutputBuilder = TransactionOutoutBuilder.new();
+     txOutputBuilder = txOutputBuilder.with_address(ScriptAddress);
+     const dataHash = hash_plutus_data(PlutusData.new_integer(BigInt.from_str(this.state.datumStr)));
+     txOutputBuilder = txOutputBuilder.with_data_hash(dataHash);
+
+     txOutputBuilder = txOutputBuilder.next();
+
+     
+    
+
  }
